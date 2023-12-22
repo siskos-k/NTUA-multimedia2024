@@ -73,6 +73,33 @@ public class Library {
                 System.out.println("Book with ISBN " + ISBN + " not found.");
             }
     }
+    public void editBookByAdmin(Admin admin, String ISBN, String newTitle, String newAuthor, String newPublisher, int newReleaseYear, int newNumCopies, String newCategory) {
+        Book bookToEdit = null;
+    
+        // Find the book with the given ISBN
+        for (Book book : books) {
+            if (book.getISBN().equals(ISBN)) {
+                bookToEdit = book;
+                break;
+            }
+        }
+    
+        // Edit the book if found
+        if (bookToEdit != null) {
+            // Update the book details
+            bookToEdit.setTitle(newTitle);
+            bookToEdit.setAuthor(newAuthor);
+            bookToEdit.setPublisher(newPublisher);
+            bookToEdit.setReleaseYear(newReleaseYear);
+            bookToEdit.setNumCopies(newNumCopies);
+            bookToEdit.setCategory(newCategory);
+    
+            System.out.println("Book with ISBN " + ISBN + " edited successfully.");
+        } else {
+            System.out.println("Book with ISBN " + ISBN + " not found.");
+        }
+    }
+    
     
     
     public void addAdmin(Admin admin) {

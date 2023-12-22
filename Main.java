@@ -28,6 +28,8 @@ public class Main {
                     System.out.println("User logged in successfully!");
                 } else {
                     System.out.println("Invalid user credentials. Exiting...");
+                    isUser = true;
+                    
                 }
                     
                 break;
@@ -69,8 +71,9 @@ if (isUser) {
         System.out.println("Admin actions:");
         System.out.println("1. View all books");
         System.out.println("2. Add a book");
-        System.out.println("3. Delete a book");
-        System.out.println("4. Exit admin actions");
+        System.out.println("3. Edit a book");
+         System.out.println("4. Delete a book");
+        System.out.println("5. Exit admin actions");
 
         int adminChoice = scanner.nextInt();
 
@@ -102,13 +105,35 @@ if (isUser) {
                 System.out.println(library.getAllBooksInfo(medialabAdmin));
                 break;
 
-            case 3: 
+                case 3:
+                // Prompt the admin to enter the ISBN of the book to edit
+                System.out.print("Enter the ISBN of the book to edit: ");
+                String bookISBNToEdit = scanner.next();
+
+                // Prompt the admin to enter the new details for the book
+                System.out.print("Enter new title: ");
+                String newTitleE = scanner.next();
+                System.out.print("Enter new author: ");
+                String newAuthorE = scanner.next();
+                System.out.print("Enter new publisher: ");
+                String newPublisherE = scanner.next();
+                System.out.print("Enter new release year: ");
+                int newReleaseYearE = scanner.nextInt();
+                System.out.print("Enter new number of copies: ");
+                int newNumCopiesE = scanner.nextInt();
+                System.out.print("Enter new category: ");
+                String newCategoryE = scanner.next();
+
+                // Call the method to edit a book
+                library.editBookByAdmin(medialabAdmin, bookISBNToEdit, newTitleE, newAuthorE, newPublisherE, newReleaseYearE, newNumCopiesE, newCategoryE);
+                break;
+            case 4: 
              // Prompt the admin to enter the ISBN of the book to be deleted
              System.out.print("Enter the ISBN of the book to delete: ");
              String bookISBNToDelete = scanner.next();
              library.deleteBookByAdmin(medialabAdmin, bookISBNToDelete);
              break;
-            case 4:
+            case 5:
                 // Exit admin actions
                 System.out.println("Exiting admin actions.");
                 adminActionsLoop = false;
