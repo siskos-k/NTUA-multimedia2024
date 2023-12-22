@@ -49,8 +49,22 @@ public class Library {
         this.lendings = lendings;
     }
 
+    public void addBook(Book book) {
+        books.add(book);
+    }
+
     public void addAdmin(Admin admin) {
         admins.add(admin);
+    }
+
+    public void addSampleBooks() {
+        Book book1 = new Book("The Great Gatsby", "F. Scott Fitzgerald", "Scribner", 1925, "9780743273565", 5, "Fiction");
+        Book book2 = new Book("To Kill a Mockingbird", "Harper Lee", "J.B. Lippincott & Co.", 1960, "9780061120084", 3, "Classics");
+        Book book3 = new Book("1984", "George Orwell", "Secker & Warburg", 1949, "9780451524935", 4, "Dystopian");
+
+        addBook(book1);
+        addBook(book2);
+        addBook(book3);
     }
     // Additional methods for library actions
 }

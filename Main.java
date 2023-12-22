@@ -42,7 +42,6 @@ public class Main {
     private static boolean loginAsAdmin(String username, String password, Library library) {
         for (Admin admin : library.getAdmins()) {
             if (admin.getUsername().equals(username) && admin.getPassword().equals(password)) {
-                System.err.println("User exists");
                 return true; // Admin found, login successful
             }
         }
