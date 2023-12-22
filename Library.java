@@ -66,5 +66,23 @@ public class Library {
         addBook(book2);
         addBook(book3);
     }
+    public String getAllBooksInfo() {
+        StringBuilder result = new StringBuilder();
+        result.append("List of Books:\n");
+
+        for (Book book : books) {
+            result.append("Title: ").append(book.getTitle()).append("\n");
+            result.append("Author: ").append(book.getAuthor()).append("\n");
+            result.append("Publisher: ").append(book.getPublisher()).append("\n");
+            result.append("Release Year: ").append(book.getReleaseYear()).append("\n");
+            result.append("ISBN: ").append(book.getISBN()).append("\n");
+            result.append("Number of Copies: ").append(book.getNumCopies()).append("\n");
+            result.append("Rating: ").append(book.getRating()).append("\n");
+            result.append("Category: ").append(book.getCategory()).append("\n");
+            result.append("Comments: ").append(book.getComments()).append("\n\n");
+        }
+
+        return result.toString();
+    }
     // Additional methods for library actions
 }

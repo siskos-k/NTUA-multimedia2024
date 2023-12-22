@@ -5,7 +5,7 @@ public class Main {
         Library library = new Library();
 
         // Adding an admin with provided credentials
-        Admin medialabAdmin = new Admin("medialab", "medialab_2024");
+        Admin medialabAdmin = new Admin("a", "a");
         library.addAdmin(medialabAdmin);
 
         // Login as either user or admin
@@ -46,5 +46,6 @@ public class Main {
             }
         }
         return false; // Admin not found, login failed
+        
     }
 }
