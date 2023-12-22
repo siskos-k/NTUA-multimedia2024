@@ -52,12 +52,28 @@ public class Library {
     public void addBook(Book book) {
         books.add(book);
     }
-    
+
     public void addBookByAdmin(Admin admin, String title, String author, String publisher, int releaseYear, String ISBN, int numCopies, String category) {
         Book newBook = new Book(title, author, publisher, releaseYear, ISBN, numCopies, category);
         addBook(newBook); // Utilize the existing addBook method
         System.out.println("Book added successfully!");
     }
+    public void deleteBookByAdmin(Admin admin, String ISBN) {
+            Book bookToDelete = null;
+            for (Book book : books) {
+                if (book.getISBN().equals(ISBN)) {
+                    bookToDelete = book;
+                    break;
+                }
+            }
+            if (bookToDelete != null) {
+                books.remove(bookToDelete);
+                System.out.println("Book with ISBN " + ISBN + " deleted successfully.");
+            } else {
+                System.out.println("Book with ISBN " + ISBN + " not found.");
+            }
+    }
+    
     
     public void addAdmin(Admin admin) {
         admins.add(admin);
@@ -68,9 +84,9 @@ public class Library {
     }
 
     public void addSampleBooks() {
-        Book book1 = new Book("The Great Gatsby", "F. Scott Fitzgerald", "Scribner", 1925, "9780743273565", 5, "Fiction");
-        Book book2 = new Book("To Kill a Mockingbird", "Harper Lee", "J.B. Lippincott & Co.", 1960, "9780061120084", 3, "Classics");
-        Book book3 = new Book("1984", "George Orwell", "Secker & Warburg", 1949, "9780451524935", 4, "Dystopian");
+        Book book1 = new Book("The Great Gatsby", "F. Scott Fitzgerald", "Scribner", 1925, "1", 5, "Fiction");
+        Book book2 = new Book("To Kill a Mockingbird", "Harper Lee", "J.B. Lippincott & Co.", 1960, "2", 3, "Classics");
+        Book book3 = new Book("1984", "George Orwell", "Secker & Warburg", 1949, "3", 4, "Dystopian");
 
         addBook(book1);
         addBook(book2);

@@ -67,14 +67,15 @@ if (isUser) {
 
     while (adminActionsLoop) {
         System.out.println("Admin actions:");
-        System.out.println("1. Add a book");
-        System.out.println("2. View all books");
-        System.out.println("3. Exit admin actions");
+        System.out.println("1. View all books");
+        System.out.println("2. Add a book");
+        System.out.println("3. Delete a book");
+        System.out.println("4. Exit admin actions");
 
         int adminChoice = scanner.nextInt();
 
         switch (adminChoice) {
-            case 1:
+            case 2:
                 // Prompt the admin to enter book details
                 System.out.print("Enter title: ");
                 String newTitle = scanner.next();
@@ -96,12 +97,18 @@ if (isUser) {
                 System.out.println("Book added successfully!");
                 break;
 
-            case 2:
+            case 1:
                 // View all books (assuming the admin has viewing privileges)
                 System.out.println(library.getAllBooksInfo(medialabAdmin));
                 break;
 
-            case 3:
+            case 3: 
+             // Prompt the admin to enter the ISBN of the book to be deleted
+             System.out.print("Enter the ISBN of the book to delete: ");
+             String bookISBNToDelete = scanner.next();
+             library.deleteBookByAdmin(medialabAdmin, bookISBNToDelete);
+             break;
+            case 4:
                 // Exit admin actions
                 System.out.println("Exiting admin actions.");
                 adminActionsLoop = false;
