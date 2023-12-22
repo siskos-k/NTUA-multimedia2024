@@ -15,7 +15,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Login as:\n1. User\n2. Admin");
         int choice = scanner.nextInt();
-        boolean isUser= false;
+        boolean isUser= true;
         switch (choice) {
             case 1:
                 System.out.print("Enter user username: ");
@@ -44,6 +44,7 @@ public class Main {
                 if (loginAsAdmin(adminUsername, adminPassword, library)) {
                     // Admin logged in successfully
                     System.out.println("Admin logged in successfully!");
+                     isUser= false;
                 } else {
                     System.out.println("Invalid admin credentials. Exiting...");
                 }
@@ -68,16 +69,32 @@ if (isUser) {
     boolean adminActionsLoop = true;
 
     while (adminActionsLoop) {
+         System.out.println("");
+
         System.out.println("Admin actions:");
+         System.out.println("--------------");
         System.out.println("1. View all books");
+           System.out.println("--------------");
         System.out.println("2. Add a book");
         System.out.println("3. Edit a book");
          System.out.println("4. Delete a book");
-        System.out.println("5. Exit admin actions");
+          System.out.println("--------------");
+           System.out.println("5. View all categories");
+        // System.out.println("6. Add a category");
+        System.out.println("6. Edit a category");
+         System.out.println("7. Delete a category");
+          System.out.println("--------------");
+          
+        System.out.println("8. Exit admin actions");
 
         int adminChoice = scanner.nextInt();
 
         switch (adminChoice) {
+            case 1:
+                // View all books (assuming the admin has viewing privileges)
+                System.out.println(library.getAllBooksInfo(medialabAdmin));
+                break;
+
             case 2:
                 // Prompt the admin to enter book details
                 System.out.print("Enter title: ");
@@ -100,12 +117,8 @@ if (isUser) {
                 System.out.println("Book added successfully!");
                 break;
 
-            case 1:
-                // View all books (assuming the admin has viewing privileges)
-                System.out.println(library.getAllBooksInfo(medialabAdmin));
-                break;
-
-                case 3:
+            
+            case 3:
                 // Prompt the admin to enter the ISBN of the book to edit
                 System.out.print("Enter the ISBN of the book to edit: ");
                 String bookISBNToEdit = scanner.next();
@@ -128,12 +141,40 @@ if (isUser) {
                 library.editBookByAdmin(medialabAdmin, bookISBNToEdit, newTitleE, newAuthorE, newPublisherE, newReleaseYearE, newNumCopiesE, newCategoryE);
                 break;
             case 4: 
-             // Prompt the admin to enter the ISBN of the book to be deleted
-             System.out.print("Enter the ISBN of the book to delete: ");
-             String bookISBNToDelete = scanner.next();
-             library.deleteBookByAdmin(medialabAdmin, bookISBNToDelete);
-             break;
+                // Prompt the admin to enter the ISBN of the book to be deleted
+                System.out.print("Enter the ISBN of the book to delete: ");
+                String bookISBNToDelete = scanner.next();
+                library.deleteBookByAdmin(medialabAdmin, bookISBNToDelete);
+                break;
+            // case 6:
+            // System.out.print("Enter the new category to add: ");
+            // String newCategoryToAdd = scanner.next();
+            // library.addCategory(newCategoryToAdd);
+            // break;
             case 5:
+        // Print all categories
+        library.printAllCategories();
+        break;
+            case 6:
+                // Prompt the admin to enter the old category (can be null) and the new category
+                System.out.print("Enter the old category (leave blank to add a new category): ");
+                String oldCategory = scanner.next();
+                System.out.print("Enter the new category: ");
+                String updatedCategory = scanner.next();
+
+                // Call the method to add or update a category
+                library.UpdateCategory(oldCategory.isEmpty() ? null : oldCategory, updatedCategory);
+                break;
+
+            case 7:
+    // Prompt the admin to enter the category to remove
+    System.out.print("Enter the category to remove: ");
+    String categoryToRemove = scanner.next();
+
+    // Call the method to remove a category and associated books
+    library.removeCategoryAndBooks(categoryToRemove);
+    break;
+            case 8:
                 // Exit admin actions
                 System.out.println("Exiting admin actions.");
                 adminActionsLoop = false;

@@ -1,19 +1,24 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Library {
     private List<Book> books;
     private List<User> users;
     private List<Admin> admins;
     private Map<Book, List<User>> lendings;
+    private Set<String> uniqueCategories;
+
 
     public Library() {
         this.books = new ArrayList<>();
         this.users = new ArrayList<>();
         this.admins = new ArrayList<>();
         this.lendings = new HashMap<>();
+        this.uniqueCategories = new HashSet<>();
     }
 
     // Getters and setters
@@ -53,6 +58,7 @@ public class Library {
         books.add(book);
     }
 
+    //ADDING REMOVING AND EDITING BOOKS
     public void addBookByAdmin(Admin admin, String title, String author, String publisher, int releaseYear, String ISBN, int numCopies, String category) {
         Book newBook = new Book(title, author, publisher, releaseYear, ISBN, numCopies, category);
         addBook(newBook); // Utilize the existing addBook method
@@ -99,6 +105,55 @@ public class Library {
             System.out.println("Book with ISBN " + ISBN + " not found.");
         }
     }
+    
+
+    //ADDING REMOVING AND EDITING CATEGORIES
+    public void addCategory(String newCategory) {
+        // Add the new category for all books
+        for (Book book : books) {
+            book.setCategory(newCategory);
+            uniqueCategories.add(newCategory);
+        }
+        System.out.println("Category added successfully.");
+    }
+
+    public void removeCategoryAndBooks(String categoryToRemove) {
+        // Remove all books in the specified category
+        books.removeIf(book -> {
+            if (book.getCategory().equals(categoryToRemove)) {
+                uniqueCategories.remove(categoryToRemove);
+                return true;
+            }
+            return false;
+        });
+        System.out.println("Category and associated books removed successfully.");
+    }
+
+    private Set<String> getAllUniqueCategories() {
+        Set<String> categories = new HashSet<>();
+        for (Book book : books) {
+            categories.add(book.getCategory());
+        }
+        return categories;
+    }
+
+public void printAllCategories() {
+    System.out.println("List of all categories:");
+    for (String category : getAllUniqueCategories()) {
+        System.out.println(category);
+    }
+}
+    public void UpdateCategory(String oldCategory, String newCategory) {
+        // Add or update the category for all books
+        for (Book book : books) {
+            if (oldCategory == null || book.getCategory().equals(oldCategory)) {
+                book.setCategory(newCategory);
+            }
+        }
+        System.out.println("Category updated successfully.");
+    }
+
+    
     
     
     
