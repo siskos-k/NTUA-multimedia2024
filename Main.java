@@ -18,15 +18,12 @@ public class Main {
         boolean isUser= false;
         switch (choice) {
             case 1:
-                // User login logic
                 System.out.print("Enter user username: ");
                 String Username = scanner.next();
                 System.out.print("Enter user password: ");
                 String Password = scanner.next();
 
                 if (loginAsUser(Username, Password, library)) {
-                    // Admin logged in successfully
-                    // Add your admin-specific logic here
                     isUser = true;
                     System.out.println("User logged in successfully!");
                 } else {
@@ -44,7 +41,6 @@ public class Main {
 
                 if (loginAsAdmin(adminUsername, adminPassword, library)) {
                     // Admin logged in successfully
-                    // Add your admin-specific logic here
                     System.out.println("Admin logged in successfully!");
                 } else {
                     System.out.println("Invalid admin credentials. Exiting...");
@@ -58,6 +54,66 @@ public class Main {
         String allBooksInfo = library.getAllBooksInfo(medialabAdmin);
         if(!isUser) {System.out.println(allBooksInfo); }
         else System.out.println("not authorised to perform this action");
+
+
+        //maybe remove the code above?
+        // Inside the main method or a dedicated admin action method
+// Inside the main method or a dedicated admin action method
+if (isUser) {
+    // Perform user actions
+} else {
+    // Admin actions
+    boolean adminActionsLoop = true;
+
+    while (adminActionsLoop) {
+        System.out.println("Admin actions:");
+        System.out.println("1. Add a book");
+        System.out.println("2. View all books");
+        System.out.println("3. Exit admin actions");
+
+        int adminChoice = scanner.nextInt();
+
+        switch (adminChoice) {
+            case 1:
+                // Prompt the admin to enter book details
+                System.out.print("Enter title: ");
+                String newTitle = scanner.next();
+                System.out.print("Enter author: ");
+                String newAuthor = scanner.next();
+                System.out.print("Enter publisher: ");
+                String newPublisher = scanner.next();
+                System.out.print("Enter release year: ");
+                int newReleaseYear = scanner.nextInt();
+                System.out.print("Enter ISBN: ");
+                String newISBN = scanner.next();
+                System.out.print("Enter number of copies: ");
+                int newNumCopies = scanner.nextInt();
+                System.out.print("Enter category: ");
+                String newCategory = scanner.next();
+
+                // Call the method to add a book
+                library.addBookByAdmin(medialabAdmin, newTitle, newAuthor, newPublisher, newReleaseYear, newISBN, newNumCopies, newCategory);
+                System.out.println("Book added successfully!");
+                break;
+
+            case 2:
+                // View all books (assuming the admin has viewing privileges)
+                System.out.println(library.getAllBooksInfo(medialabAdmin));
+                break;
+
+            case 3:
+                // Exit admin actions
+                System.out.println("Exiting admin actions.");
+                adminActionsLoop = false;
+                break;
+
+            default:
+                System.out.println("Invalid choice. Please choose a valid option.");
+        }
+    }
+}
+
+
     }
 
     // Admin login method

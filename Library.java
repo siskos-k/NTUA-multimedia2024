@@ -52,7 +52,13 @@ public class Library {
     public void addBook(Book book) {
         books.add(book);
     }
-
+    
+    public void addBookByAdmin(Admin admin, String title, String author, String publisher, int releaseYear, String ISBN, int numCopies, String category) {
+        Book newBook = new Book(title, author, publisher, releaseYear, ISBN, numCopies, category);
+        addBook(newBook); // Utilize the existing addBook method
+        System.out.println("Book added successfully!");
+    }
+    
     public void addAdmin(Admin admin) {
         admins.add(admin);
     }
@@ -93,7 +99,6 @@ public class Library {
 
 
     else {
-        //  System.out.println(user.hasViewingPrivileges());
     System.out.println("not authorised");
     return("no");
 }
