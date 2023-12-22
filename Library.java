@@ -49,5 +49,8 @@ public class Library {
         this.lendings = lendings;
     }
 
+    public void addAdmin(Admin admin) {
+        admins.add(admin);
+    }
     // Additional methods for library actions
 }
