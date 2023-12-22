@@ -57,6 +57,10 @@ public class Library {
         admins.add(admin);
     }
 
+    public void addUser(User user) {
+        users.add(user);
+    }
+
     public void addSampleBooks() {
         Book book1 = new Book("The Great Gatsby", "F. Scott Fitzgerald", "Scribner", 1925, "9780743273565", 5, "Fiction");
         Book book2 = new Book("To Kill a Mockingbird", "Harper Lee", "J.B. Lippincott & Co.", 1960, "9780061120084", 3, "Classics");
@@ -66,10 +70,13 @@ public class Library {
         addBook(book2);
         addBook(book3);
     }
-    public String getAllBooksInfo() {
+    public String getAllBooksInfo(LibraryUser user) {
+        //maybe check if libr is ad or not lol
         StringBuilder result = new StringBuilder();
         result.append("List of Books:\n");
 
+        if(user.hasViewingPrivileges()){
+            // System.out.println(user.hasViewingPrivileges());
         for (Book book : books) {
             result.append("Title: ").append(book.getTitle()).append("\n");
             result.append("Author: ").append(book.getAuthor()).append("\n");
@@ -81,8 +88,16 @@ public class Library {
             result.append("Category: ").append(book.getCategory()).append("\n");
             result.append("Comments: ").append(book.getComments()).append("\n\n");
         }
-
         return result.toString();
     }
-    // Additional methods for library actions
+
+
+    else {
+        //  System.out.println(user.hasViewingPrivileges());
+    System.out.println("not authorised");
+    return("no");
 }
+    }
+    
+    }
+    // Additional methods for library actions
