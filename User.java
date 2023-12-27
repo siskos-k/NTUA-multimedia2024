@@ -4,7 +4,6 @@ import java.util.List;
 public class User implements LibraryUser{
     private String username;
     private String password;
-    private List<Book> borrowedBooks;
     
     public boolean login(String username, String password) {
         // Implementation for admin login
@@ -13,7 +12,7 @@ public class User implements LibraryUser{
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.borrowedBooks = new ArrayList<>();
+        // this.borrowedBooks = new/ ArrayList<>();
         this.borrowings = new ArrayList<>();
 
     }
@@ -35,16 +34,8 @@ public class User implements LibraryUser{
         this.password = password;
     }
 
-    public List<Book> getBorrowedBooks() {
-        return borrowedBooks;
-    }
-
-    public void setBorrowedBooks(List<Book> borrowedBooks) {
-        this.borrowedBooks = borrowedBooks;
-    }
+   
     public boolean hasViewingPrivileges() {
-        // Add your logic here to determine if the admin has the privilege to view books
-        // For simplicity, always return true in this example
         return false;
     }
     private List<Borrowing> borrowings;

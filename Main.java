@@ -15,7 +15,7 @@ public class Main {
 
         // Login as either user or admin
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Login as:\n1. User\n2. Admin");
+        System.out.println("Login as:\n1. User\n2. Admin\n3.Create new account");
         int choice = scanner.nextInt();
         boolean isUser= true;
         switch (choice) {
@@ -54,11 +54,34 @@ public class Main {
                     System.out.println("Invalid admin credentials. Exiting...");
                 }
                 
-                break;
                 
+                break;
+
+            case 3:
+                // Option to create a new user
+                System.out.print("Enter new user username: ");
+                String newUserUsername = scanner.next();
+                System.out.print("Enter new user password: ");
+                String newUserPassword = scanner.next();
+                User newUser = new User(newUserUsername, newUserPassword);
+                library.addUser(newUser);
+                System.out.println("New user created successfully!");
+                if (loginAsUser(newUserUsername, newUserPassword, library)) {
+                    isUser = true;
+                    System.out.println("User logged in successfully!");
+                    User newCurr = new User(newUserUsername, newUserPassword);
+                    performUserActions(newCurr, library, scanner);
+                } else {
+                    System.out.println("Error logging in the new user. Exiting...");
+                    isUser = true;
+                }
+                break;
+
             default:
                 System.out.println("Invalid choice. Exiting...");
         }
+
+        
         String allBooksInfo = library.getAllBooksInfo(medialabAdmin);
         if(!isUser) {System.out.println(allBooksInfo); }
         else System.out.println("not authorised to perform this action");
