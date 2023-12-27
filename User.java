@@ -14,6 +14,8 @@ public class User implements LibraryUser{
         this.username = username;
         this.password = password;
         this.borrowedBooks = new ArrayList<>();
+        this.borrowings = new ArrayList<>();
+
     }
 
     // Getters and setters
@@ -45,5 +47,28 @@ public class User implements LibraryUser{
         // For simplicity, always return true in this example
         return false;
     }
-    // Additional methods for user actions
+    private List<Borrowing> borrowings;
+
+    public List<Borrowing> getBorrowings() {
+        return borrowings;
+    }
+
+    public void borrowBook(Book book) {
+        if (book.getNumCopies() > 0) {
+            book.setNumCopies(book.getNumCopies() - 1);
+            Borrowing borrowing = new Borrowing(this, book);
+            borrowings.add(borrowing);
+            System.out.println("Book borrowed successfully!");
+        } else {
+            System.out.println("Sorry, no copies available for borrowing.");
+        }
+    }
+
+    public void viewBorrowedBooks() {
+        System.out.println("Borrowed Books:");
+        for (Borrowing borrowing : borrowings) {
+            System.out.println("Title: " + borrowing.getBook().getTitle() +
+                               ", Borrowing Date: " + borrowing.getBorrowingDate());
+        }
+    }
 }

@@ -7,6 +7,7 @@ public class Main {
         // Adding an admin with provided credentials
         Admin medialabAdmin = new Admin("a", "a");
         library.addAdmin(medialabAdmin);
+        library.addRandomUsers(5);
         //adding a user
         User medialabUser = new User("u", "u");
         library.addUser(medialabUser);
@@ -26,6 +27,8 @@ public class Main {
                 if (loginAsUser(Username, Password, library)) {
                     isUser = true;
                     System.out.println("User logged in successfully!");
+                    performUserActions(medialabUser, library, scanner);
+
                 } else {
                     System.out.println("Invalid user credentials. Exiting...");
                     isUser = true;
@@ -84,8 +87,9 @@ if (isUser) {
         System.out.println("6. Edit a category");
          System.out.println("7. Delete a category");
           System.out.println("--------------");
-          
-        System.out.println("8. Exit admin actions");
+            System.out.println("8. View all lendings");
+          System.out.println("--------------");
+        System.out.println("9. Exit admin actions");
 
         int adminChoice = scanner.nextInt();
 
@@ -174,7 +178,10 @@ if (isUser) {
     // Call the method to remove a category and associated books
     library.removeCategoryAndBooks(categoryToRemove);
     break;
-            case 8:
+            case 8: 
+            library.viewAllBorrowings();
+            break;
+            case 9:
                 // Exit admin actions
                 System.out.println("Exiting admin actions.");
                 adminActionsLoop = false;
@@ -189,6 +196,49 @@ if (isUser) {
 
     }
 
+    private static void performUserActions(User user, Library library, Scanner scanner) {
+        boolean userActionsLoop = true;
+
+        while (userActionsLoop) {
+            System.out.println("\nUser actions:");
+            System.out.println("--------------");
+            System.out.println("1. Borrow a book");
+            System.out.println("2. View borrowed books");
+            System.out.println("3. Exit user actions");
+
+            int userChoice = scanner.nextInt();
+
+            switch (userChoice) {
+                case 1:
+                    // Borrow a book
+                    System.out.print("Enter the ISBN of the book to borrow: ");
+                    String bookISBNToBorrow = scanner.next();
+                    Book bookToBorrow = findBookByISBN(bookISBNToBorrow, library);
+
+                    if (bookToBorrow != null) {
+                        library.borrowBook(user, bookToBorrow);
+                    } else {
+                        System.out.println("Book with ISBN " + bookISBNToBorrow + " not found.");
+                    }
+                    break;
+
+                case 2:
+                    // View borrowed books
+                    user.viewBorrowedBooks();
+                    break;
+
+                case 3:
+                    // Exit user actions
+                    System.out.println("Exiting user actions.");
+                    userActionsLoop = false;
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Please choose a valid option.");
+            }
+        }
+    }
+
     // Admin login method
     private static boolean loginAsAdmin(String username, String password, Library library) {
         for (Admin admin : library.getAdmins()) {
@@ -197,15 +247,25 @@ if (isUser) {
             }
         }
         return false; // Admin not found, login failed
-        
     }
-      private static boolean loginAsUser(String username, String password, Library library) {
+
+    // User login method
+    private static boolean loginAsUser(String username, String password, Library library) {
         for (User user : library.getUsers()) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-                return true; // Admin found, login successful
+                return true; // User found, login successful
             }
         }
-        return false; // Admin not found, login failed
-        
+        return false; // User not found, login failed
+    }
+
+    // Helper method to find a book by ISBN
+    private static Book findBookByISBN(String ISBN, Library library) {
+        for (Book book : library.getBooks()) {
+            if (book.getISBN().equals(ISBN)) {
+                return book;
+            }
+        }
+        return null;
     }
 }

@@ -3,6 +3,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 public class Library {
@@ -11,6 +12,8 @@ public class Library {
     private List<Admin> admins;
     private Map<Book, List<User>> lendings;
     private Set<String> uniqueCategories;
+    private List<Borrowing> allBorrowings;
+
 
 
     public Library() {
@@ -19,6 +22,8 @@ public class Library {
         this.admins = new ArrayList<>();
         this.lendings = new HashMap<>();
         this.uniqueCategories = new HashSet<>();
+        this.allBorrowings = new ArrayList<>();
+
     }
 
     // Getters and setters
@@ -156,7 +161,28 @@ public void printAllCategories() {
     
     
     
-    
+    public void borrowBook(User user, Book book) {
+        // Check if the book is available for borrowing
+        if (book.getNumCopies() > 0) {
+            book.setNumCopies(book.getNumCopies() - 1);
+            Borrowing borrowing = new Borrowing(user, book);
+            user.getBorrowings().add(borrowing);
+            allBorrowings.add(borrowing);
+            System.out.println("Book borrowed successfully!");
+        } else {
+            System.out.println("Sorry, no copies available for borrowing.");
+        }
+    }
+
+    public void viewAllBorrowings() {
+        System.out.println("All Borrowings:");
+        for (Borrowing borrowing : allBorrowings) {
+            System.out.println("User: " + borrowing.getUser().getUsername() +
+                               ", Book: " + borrowing.getBook().getTitle() +
+                               ", Borrowing Date: " + borrowing.getBorrowingDate());
+        }
+    }
+
     public void addAdmin(Admin admin) {
         admins.add(admin);
     }
@@ -201,6 +227,32 @@ public void printAllCategories() {
     return("no");
 }
     }
+    public void addRandomUsers(int numberOfUsers) {
+        for (int i = 0; i < numberOfUsers; i++) {
+            String username = "user" + (i + 1);
+            String password = "password" + (i + 1);
     
+            // Check if the generated username already exists
+            while (usernameExists(username)) {
+                i++;
+                username = "user" + (i + 1);
+            }
+    
+            // Create a new user and add it to the library
+            User newUser = new User(username, password);
+            addUser(newUser);
+            System.out.println("Username: " + username + ", Password: " + password);
+        }
+    
+        System.out.println("Random users added successfully!");
+    }
+    private boolean usernameExists(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
     }
     // Additional methods for library actions
