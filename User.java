@@ -66,9 +66,11 @@ public class User implements LibraryUser{
 
     public void viewBorrowedBooks() {
         System.out.println("Borrowed Books:");
+        System.out.println("Number of Borrowings: " + borrowings.size()); // Add this line
         for (Borrowing borrowing : borrowings) {
-            System.out.println("Title: " + borrowing.getBook().getTitle() +
-                               ", Borrowing Date: " + borrowing.getBorrowingDate());
+            System.out.println("Book: " + borrowing.getBook().getTitle() +
+                    ", Borrowing Date: " + borrowing.getBorrowingDate());
         }
     }
+    
 }

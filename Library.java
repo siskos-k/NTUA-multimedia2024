@@ -173,6 +173,15 @@ public void printAllCategories() {
             System.out.println("Sorry, no copies available for borrowing.");
         }
     }
+    public void viewBorrowedBooks(String username) {
+        System.out.println("Borrowed Books for User " + username + ":");
+        for (Borrowing borrowing : allBorrowings) {
+            if (borrowing.getUser().getUsername().equals(username)) {
+                System.out.println("Book: " + borrowing.getBook().getTitle() +
+                        ", Borrowing Date: " + borrowing.getBorrowingDate());
+            }
+        }
+    }
 
     public void viewAllBorrowings() {
         System.out.println("All Borrowings:");
@@ -199,6 +208,14 @@ public void printAllCategories() {
         addBook(book1);
         addBook(book2);
         addBook(book3);
+        Book book4 = new Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "Bloomsbury", 1997, "4", 8, "Fantasy");
+        Book book5 = new Book("The Catcher in the Rye", "J.D. Salinger", "Little, Brown and Company", 1951, "5", 6, "Classics");
+        Book book6 = new Book("The Hobbit", "J.R.R. Tolkien", "Allen & Unwin", 1937, "6", 7, "Fantasy");
+
+        addBook(book4);
+        addBook(book5);
+        addBook(book6);
+
     }
     public String getAllBooksInfo(LibraryUser user) {
         //maybe check if libr is ad or not lol
@@ -254,5 +271,27 @@ public void printAllCategories() {
         }
         return false;
     }
+    public void addSpecificBorrowings() {
+        // Assuming you have users and books already added
+    
+        // User 1 borrowing Book 1
+        borrowBook(users.get(0), books.get(0));
+    
+        // User 2 borrowing Book 2
+        borrowBook(users.get(1), books.get(1));
+    
+        // User 3 borrowing Book 3
+        borrowBook(users.get(2), books.get(2));
+    
+        // User 1 borrowing Book 2
+        borrowBook(users.get(0), books.get(1));
+    
+        // User 2 borrowing Book 3
+        borrowBook(users.get(1), books.get(2));
+    
+        // Displaying all borrowings after specific borrowings
+        viewAllBorrowings();
+    }
+    
     }
     // Additional methods for library actions

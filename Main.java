@@ -11,7 +11,8 @@ public class Main {
         //adding a user
         User medialabUser = new User("u", "u");
         library.addUser(medialabUser);
-        
+        library.addSpecificBorrowings();
+
         // Login as either user or admin
         Scanner scanner = new Scanner(System.in);
         System.out.println("Login as:\n1. User\n2. Admin");
@@ -27,7 +28,8 @@ public class Main {
                 if (loginAsUser(Username, Password, library)) {
                     isUser = true;
                     System.out.println("User logged in successfully!");
-                    performUserActions(medialabUser, library, scanner);
+                    User cur = new User(Username, Password);
+                    performUserActions(cur, library, scanner);
 
                 } else {
                     System.out.println("Invalid user credentials. Exiting...");
@@ -87,7 +89,7 @@ if (isUser) {
         System.out.println("6. Edit a category");
          System.out.println("7. Delete a category");
           System.out.println("--------------");
-            System.out.println("8. View all lendings");
+            System.out.println("8. View all borrowings");
           System.out.println("--------------");
         System.out.println("9. Exit admin actions");
 
@@ -183,7 +185,7 @@ if (isUser) {
             break;
             case 9:
                 // Exit admin actions
-                System.out.println("Exiting admin actions.");
+                System.out.println("Exiting a userActionsLoop = false;dmin actions.");
                 adminActionsLoop = false;
                 break;
 
@@ -224,7 +226,8 @@ if (isUser) {
 
                 case 2:
                     // View borrowed books
-                    user.viewBorrowedBooks();
+                    // User cur = new User(Username, Password);
+                    library.viewBorrowedBooks(user.getUsername());
                     break;
 
                 case 3:
