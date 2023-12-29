@@ -378,7 +378,31 @@ public void printAllCategories() {
        
         
         // Add the findBorrowingByUserAndBookISBN method in the Library class
-        
+        // Inside the Library class
+        public void editUserCredentialsByAdmin(Admin admin, String targetUsername, String newUsername, String newPassword, String newName, String newSurname, String newAdt, String newEmail) {
+            // Check if the admin has privileges to edit user credentials
+           
+                User targetUser = getUserByUsername(targetUsername);
+    
+                if (targetUser != null) {
+                    // Update user details
+                    targetUser.setUsername(newUsername);
+                    targetUser.setPassword(newPassword);
+                    targetUser.setName(newName);
+                    targetUser.setSurname(newSurname);
+                    targetUser.setAdt(newAdt);
+                    targetUser.setEmail(newEmail);
+    
+                    System.out.println("User credentials updated successfully by admin.");
+                } else {
+                    System.out.println("User not found.");
+                }
+           
+            
+        }
+    
+
+
         private Borrowing findBorrowingByUserAndBookISBN(User user, String bookISBN) {
             for (Borrowing borrowing : allBorrowings) {
                 if (borrowing.getUser().equals(user) && borrowing.getBook().getISBN().equals(bookISBN)) {

@@ -70,5 +70,23 @@ public class User implements LibraryUser{
                     ", Borrowing Date: " + borrowing.getBorrowingDate());
         }
     }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    // Setter for surname
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    // Setter for ADT
+    public void setAdt(String adt) {
+        this.adt = adt;
+    }
+
+    // Setter for email
+    public void setEmail(String email) {
+        this.email = email;
+    }
     
 }

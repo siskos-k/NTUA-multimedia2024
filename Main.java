@@ -139,7 +139,8 @@ public class Main {
             System.out.println("7. Delete a category");
             System.out.println("8. View all borrowings");
             System.out.println("9. Terminate borrowing");
-            System.out.println("10. Exit admin actions");
+            System.out.println("10. Edit user credentials");
+            System.out.println("11. Exit admin actions");
 
             int adminChoice = scanner.nextInt();
 
@@ -246,7 +247,29 @@ public class Main {
                     library.terminateBorrowingByAdmin(admin, usernameToTerminate, ISBNToTerminate);
                     break;
             
-                case 10:
+
+                    // Edit user credentials by admin
+                    case 10: // Assuming 10 is the option to edit user credentials
+                    System.out.print("Enter the username of the user to edit: ");
+                    String targetUsername = scanner.next();
+                    System.out.print("Enter the new username: ");
+                    String newUsername = scanner.next();
+                    System.out.print("Enter the new password: ");
+                    String newPassword = scanner.next();
+                    System.out.print("Enter the new name: ");
+                    String newName = scanner.next();
+                    System.out.print("Enter the new surname: ");
+                    String newSurname = scanner.next();
+                    System.out.print("Enter the new adt: ");
+                    String newAdt = scanner.next();
+                    System.out.print("Enter the new email: ");
+                    String newEmail = scanner.next();
+                
+                    // Call the method to edit user credentials
+                    library.editUserCredentialsByAdmin(admin, targetUsername, newUsername, newPassword, newName, newSurname, newAdt, newEmail);
+                    break;
+            
+                case 11:
                     // Exit admin actions
                     System.out.println("Exiting admin actions.");
                     adminActionsLoop = false;
