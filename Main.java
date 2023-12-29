@@ -317,15 +317,14 @@ public class Main {
                     adminActionsLoop = false;
                     break;
             
-                // ... (remaining cases)
+
             
                 default:
                     System.out.println("Invalid choice. Please choose a valid option.");
             }
 
         }
-    }§§
-
+    }
 
 
     private static void performUserActions(User user, Library library, Scanner scanner) {
