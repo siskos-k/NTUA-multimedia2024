@@ -9,8 +9,8 @@ public class Main {
         library.addAdmin(medialabAdmin);
         library.addRandomUsers(5);
         // adding a user
-        User medialabUser = new User("u", "u");
-        library.addUser(medialabUser);
+        // User medialabUser = new User("u", "u");
+        // library.addUser(medialabUser);
         library.addSpecificBorrowings();
 
         Scanner scanner = new Scanner(System.in);
@@ -35,7 +35,7 @@ public class Main {
                     if (loginAsUser(username, password, library)) {
                         isUser = true;
                         System.out.println("User logged in successfully!");
-                        User cur = new User(username, password);
+                        User cur = library.getUserByUsername(username);
                         performUserActions(cur, library, scanner);
 
                     } else {
@@ -61,25 +61,35 @@ public class Main {
                     }
                     break;
 
-                case 3:
+                    case 3:
                     // Option to create a new user
-                    System.out.print("Enter new user username: ");
+                    System.out.print("Enter yourusername: ");
                     String newUserUsername = scanner.next();
-                    System.out.print("Enter new user password: ");
+                    System.out.print("Enter your password: ");
                     String newUserPassword = scanner.next();
-                    User newUser = new User(newUserUsername, newUserPassword);
+                    System.out.print("Enter your name: ");
+                    String newName = scanner.next();
+                    System.out.print("Enter σyour surname: ");
+                    String newSurname = scanner.next();
+                    System.out.print("Enter your adt: ");
+                    String newAdt = scanner.next();
+                    System.out.print("Enter your email: ");
+                    String newEmail = scanner.next();
+                
+                    User newUser = new User(newUserUsername, newUserPassword, newName, newSurname, newAdt, newEmail);
                     library.addUser(newUser);
                     System.out.println("New user created successfully!");
                     if (loginAsUser(newUserUsername, newUserPassword, library)) {
                         isUser = true;
                         System.out.println("User logged in successfully!");
-                        User newCurr = new User(newUserUsername, newUserPassword);
+                        User newCurr = new User(newUserUsername, newUserPassword, newName, newSurname, newAdt, newEmail);
                         performUserActions(newCurr, library, scanner);
                     } else {
                         System.out.println("Error logging in the new user. Exiting...");
                         isUser = true;
                     }
                     break;
+                
 
                 case 4:
                     // Exit the application
@@ -187,6 +197,8 @@ public class Main {
                     // Prompt the admin to enter the ISBN of the book to be deleted
                     System.out.print("Enter the ISBN of the book to delete: ");
                     String bookISBNToDelete = scanner.next();
+                    library.removeBookFromBorrowings(bookISBNToDelete);
+
                     library.deleteBookByAdmin(admin, bookISBNToDelete);
                     break;
 
@@ -210,6 +222,8 @@ public class Main {
                     // Prompt the admin to enter the category to remove
                     System.out.print("Enter the category to remove: ");
                     String categoryToRemove = scanner.next();
+                    //update current borriwngs
+                    library.removeBooksInCategoryFromBorrowings(categoryToRemove);
 
                     // Call the method to remove a category and associated books
                     library.removeCategoryAndBooks(categoryToRemove);

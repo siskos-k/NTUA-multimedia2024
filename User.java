@@ -4,14 +4,21 @@ import java.util.List;
 public class User implements LibraryUser{
     private String username;
     private String password;
-    
+    private String name;
+    private String surname;
+    private String adt;
+    private String email;
     public boolean login(String username, String password) {
         // Implementation for admin login
         return false;
     }
-    public User(String username, String password) {
+    public User(String username, String password, String name, String surname, String adt, String email) {
         this.username = username;
         this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.adt = adt;
+        this.email = email;
         // this.borrowedBooks = new/ ArrayList<>();
         this.borrowings = new ArrayList<>();
 

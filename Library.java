@@ -62,7 +62,15 @@ public class Library {
     public void addBook(Book book) {
         books.add(book);
     }
-
+    public void removeBookFromBorrowings(String ISBN) {
+        // Iterate through borrowings and remove entries involving the book with the given ISBN
+        allBorrowings.removeIf(borrowing -> borrowing.getBook().getISBN().equals(ISBN));
+    }
+    
+    public void removeBooksInCategoryFromBorrowings(String category) {
+        // Iterate through borrowings and remove entries involving books in the given category
+        allBorrowings.removeIf(borrowing -> borrowing.getBook().getCategory().equals(category));
+    }
     //ADDING REMOVING AND EDITING BOOKS
     public void addBookByAdmin(Admin admin, String title, String author, String publisher, int releaseYear, String ISBN, int numCopies, String category) {
         Book newBook = new Book(title, author, publisher, releaseYear, ISBN, numCopies, category);
@@ -248,6 +256,10 @@ public void printAllCategories() {
         for (int i = 0; i < numberOfUsers; i++) {
             String username = "user" + (i + 1);
             String password = "password" + (i + 1);
+            String name = "Name" + (i + 1);
+            String surname = "Surname" + (i + 1);
+            String adt = "ADT" + (i + 1);
+            String email = "user" + (i + 1) + "@example.com";
     
             // Check if the generated username already exists
             while (usernameExists(username)) {
@@ -256,13 +268,16 @@ public void printAllCategories() {
             }
     
             // Create a new user and add it to the library
-            User newUser = new User(username, password);
+            User newUser = new User(username, password, name, surname, adt, email);
             addUser(newUser);
-            System.out.println("Username: " + username + ", Password: " + password);
+            System.out.println("Username: " + username + ", Password: " + password +
+                    ", Name: " + name + ", Surname: " + surname + ", ADT: " + adt +
+                    ", Email: " + email);
         }
     
         System.out.println("Random users added successfully!");
     }
+    
     private boolean usernameExists(String username) {
         for (User user : users) {
             if (user.getUsername().equals(username)) {
@@ -270,6 +285,14 @@ public void printAllCategories() {
             }
         }
         return false;
+    }
+    public User getUserByUsername(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null; // User not found
     }
     public void addSpecificBorrowings() {
         // Assuming you have users and books already added
