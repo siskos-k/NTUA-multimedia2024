@@ -4,7 +4,16 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Library library = new Library();
-        library.addSampleBooksAndRatings();
+        List<Book> loadedBooks = LibrarySerializer.loadBooks();
+        if (loadedBooks != null) {
+            library.setBooks(loadedBooks);
+        }
+        // library.addSampleBooksAndRatings();
+       
+       //loading books
+        
+
+        // LibrarySerializer.saveBooks(library.getBooks());
         // Adding an admin with provided credentials
         Admin medialabAdmin = new Admin("a", "a");
         library.addAdmin(medialabAdmin);
@@ -101,6 +110,7 @@ public class Main {
                 default:
                     System.out.println("Invalid choice. Try again.");
             }
+            
         }
     }
 
@@ -114,6 +124,7 @@ public class Main {
         return false; // User not found, login failed
     }
 
+    
     // Admin login method
     private static boolean loginAsAdmin(String username, String password, Library library) {
         for (Admin admin : library.getAdmins()) {
@@ -123,6 +134,8 @@ public class Main {
         }
         return false; // Admin not found, login failed
     }
+    
+    
 
     private static void performAdminActions(Admin admin, Library library, Scanner scanner) {
         // Admin actions loop
@@ -283,6 +296,8 @@ public class Main {
             }
         }
     }
+
+
 
     private static void performUserActions(User user, Library library, Scanner scanner) {
         // User actions loop

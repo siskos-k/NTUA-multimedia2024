@@ -1,7 +1,10 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Book {
+public class Book implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String title;
     private String author;
     private String publisher;
@@ -14,8 +17,8 @@ public class Book {
     private List<Integer> ratings;
     private double averageRating;
 
-
-    public Book(String title, String author, String publisher, int releaseYear, String ISBN, int numCopies, String category) {
+    public Book(String title, String author, String publisher, int releaseYear, String ISBN,
+                int numCopies, String category) {
         this.title = title;
         this.author = author;
         this.publisher = publisher;
@@ -24,17 +27,14 @@ public class Book {
         this.numCopies = numCopies;
         this.rating = 0;
         this.comments = new ArrayList<>();
-        this.ratings  = new ArrayList<>();
+        this.ratings = new ArrayList<>();
         this.category = category;
-
     }
-
 
     public double getAverageRating() {
         return averageRating;
     }
 
-    // Method to update the average rating when a new rating is added
     private void updateAverageRating() {
         if (!ratings.isEmpty()) {
             int sumRatings = ratings.stream().mapToInt(Integer::intValue).sum();
@@ -43,20 +43,16 @@ public class Book {
             averageRating = 0;
         }
     }
-    
-    
 
-    // Method to add a rating to the book
     public void addRating(int rating) {
         ratings.add(rating);
         updateAverageRating();
     }
-    
+
     public void addComment(String comment) {
         comments.add(comment);
     }
 
-    // Getters and setters
     public String getTitle() {
         return title;
     }
@@ -129,12 +125,16 @@ public class Book {
         this.comments = comments;
     }
 
-    // Additional methods for book manipulation
-
-
-    public void increaseRating() {
-        this.rating++;
+    public List<Integer> getRatings() {
+        return ratings;
     }
 
-    // Other methods as needed
+    public void setRatings(List<Integer> ratings) {
+        this.ratings = ratings;
+        updateAverageRating();
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 }
