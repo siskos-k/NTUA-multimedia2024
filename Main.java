@@ -1,9 +1,10 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Library library = new Library();
-        library.addSampleBooks();
+        library.addSampleBooksAndRatings();
         // Adding an admin with provided credentials
         Admin medialabAdmin = new Admin("a", "a");
         library.addAdmin(medialabAdmin);
@@ -291,8 +292,11 @@ public class Main {
             System.out.println("\nUser actions:");
             System.out.println("--------------");
             System.out.println("1. Borrow a book");
-            System.out.println("2. View borrowed books");
-            System.out.println("3. Exit user actions");
+            System.out.println("2. Add rating and comment to a book");
+            System.out.println("3. View borrowed books");
+            System.out.println("4. Search book");
+
+            System.out.println("5. Exit user actions");
 
             int userChoice = scanner.nextInt();
 
@@ -310,13 +314,62 @@ public class Main {
                         System.out.println("Book with ISBN " + bookISBNToBorrow + " not found.");
                     }
                     break;
-
                 case 2:
+                System.out.print("Enter the ISBN of the book to rate and comment: ");
+        String bookISBNToRate = scanner.next();
+        Book bookToRate = findBookByISBN(bookISBNToRate, library);
+
+        if (bookToRate != null) {
+            // Ask the user for a rating and comment
+            System.out.print("Enter your rating (1-5) for the book: ");
+            int rating = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+            System.out.print("Enter your comment for the book: ");
+            String comment = scanner.nextLine();
+
+            // Add the rating and comment to the book
+            library.addCommentAndRating(user, bookToRate, comment, rating);
+
+            // System.out.println("Rating and comment added successfully!");
+        } else {
+            System.out.println("Book with ISBN " + bookISBNToRate + " not found.");
+        }
+        break;
+                case 3:
                     // View borrowed books
                     library.viewBorrowedBooks(user.getUsername());
                     break;
 
-                case 3:
+                case 4:
+    // Search for books
+                    System.out.println("Enter search criteria:");
+                    String general = scanner.nextLine();
+                    System.out.print("Title (press Enter to skip): ");
+                    String searchTitle = scanner.nextLine();
+                    
+                    System.out.print("Author (press Enter to skip): ");
+                    String searchAuthor = scanner.nextLine();
+
+                    System.out.print("Release Year (press Enter to skip): ");
+                    String searchReleaseYear = scanner.nextLine();
+
+                    // Perform the search
+                    List<Book> searchResults = library.searchBooks(searchTitle, searchAuthor, searchReleaseYear);
+
+                    // Display search results
+                    if (!searchResults.isEmpty()) {
+                        System.out.println("Search results:");
+                        for (Book result : searchResults) {
+                            System.out.println("Title: " + result.getTitle() +
+                                    ", Author: " + result.getAuthor() +
+                                    ", Release Year: " + result.getReleaseYear() +
+                                    ", ISBN: " + result.getISBN());
+                        }
+                    } else {
+                        System.out.println("No books found matching the search criteria.");
+                    }
+                    break;
+                case 5:
                     // Exit user actions
                     System.out.println("Exiting user actions.");
                     userActionsLoop = false;

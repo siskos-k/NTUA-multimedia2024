@@ -11,6 +11,9 @@ public class Book {
     private int rating;
     private String category;
     private List<String> comments;
+    private List<Integer> ratings;
+    private double averageRating;
+
 
     public Book(String title, String author, String publisher, int releaseYear, String ISBN, int numCopies, String category) {
         this.title = title;
@@ -21,7 +24,36 @@ public class Book {
         this.numCopies = numCopies;
         this.rating = 0;
         this.comments = new ArrayList<>();
+        this.ratings  = new ArrayList<>();
         this.category = category;
+
+    }
+
+
+    public double getAverageRating() {
+        return averageRating;
+    }
+
+    // Method to update the average rating when a new rating is added
+    private void updateAverageRating() {
+        if (!ratings.isEmpty()) {
+            int sumRatings = ratings.stream().mapToInt(Integer::intValue).sum();
+            averageRating = (double) sumRatings / ratings.size();
+        } else {
+            averageRating = 0;
+        }
+    }
+    
+    
+
+    // Method to add a rating to the book
+    public void addRating(int rating) {
+        ratings.add(rating);
+        updateAverageRating();
+    }
+    
+    public void addComment(String comment) {
+        comments.add(comment);
     }
 
     // Getters and setters
@@ -98,9 +130,7 @@ public class Book {
     }
 
     // Additional methods for book manipulation
-    public void addComment(String comment) {
-        comments.add(comment);
-    }
+
 
     public void increaseRating() {
         this.rating++;

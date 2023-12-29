@@ -25,6 +25,15 @@ public class Library {
         this.allBorrowings = new ArrayList<>();
 
     }
+    public void addRatingAndComment(User user, Book book, int rating, String comment) {
+        if (user != null && book != null) {
+            book.addRating(rating);
+            book.addComment(comment);
+            System.out.println("Rating and comment added successfully!");
+        } else {
+            System.out.println("User or book not found.");
+        }
+    }
 
     // Getters and setters
     public List<Book> getBooks() {
@@ -208,30 +217,84 @@ public void printAllCategories() {
         users.add(user);
     }
 
-    public void addSampleBooks() {
+    public void addSampleBooksAndRatings() {
+        String[] sampleComments = {
+            "A captivating read!",
+            "Well-written and thought-provoking.",
+            "Highly recommended.",
+            "Couldn't put it down!",
+            "Great characters and plot.",
+            "An absolute classic.",
+            "Interesting and informative.",
+            "Page-turner from start to finish."
+            // Add more meaningful comments as needed
+        };
+    
         Book book1 = new Book("The Great Gatsby", "F. Scott Fitzgerald", "Scribner", 1925, "1", 5, "Fiction");
+        addRatingsAndComments(book1, sampleComments, 5);
+    
         Book book2 = new Book("To Kill a Mockingbird", "Harper Lee", "J.B. Lippincott & Co.", 1960, "2", 3, "Classics");
+        addRatingsAndComments(book2, sampleComments, 3);
+    
         Book book3 = new Book("1984", "George Orwell", "Secker & Warburg", 1949, "3", 4, "Dystopian");
-
-        addBook(book1);
-        addBook(book2);
-        addBook(book3);
+        addRatingsAndComments(book3, sampleComments, 4);
+    
         Book book4 = new Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "Bloomsbury", 1997, "4", 8, "Fantasy");
+        addRatingsAndComments(book4, sampleComments, 3);
+    
         Book book5 = new Book("The Catcher in the Rye", "J.D. Salinger", "Little, Brown and Company", 1951, "5", 6, "Classics");
+        addRatingsAndComments(book5, sampleComments, 4);
+    
         Book book6 = new Book("The Hobbit", "J.R.R. Tolkien", "Allen & Unwin", 1937, "6", 7, "Fantasy");
-
-        addBook(book4);
-        addBook(book5);
-        addBook(book6);
-
+        addRatingsAndComments(book6, sampleComments, 5);
+    }
+    
+    private void addRatingsAndComments(Book book, String[] sampleComments, int numRatingsAndComments) {
+        Random random = new Random();
+    
+        for (int i = 0; i < numRatingsAndComments; i++) {
+            int randomRating = random.nextInt(5) + 1;  // Random rating between 1 and 5
+            String randomComment = sampleComments[random.nextInt(sampleComments.length)];
+    
+            book.addRating(randomRating);
+            book.addComment(randomComment);
+        }
+    
+        // Assuming there is a method to add the book to the library (similar to addBook)
+        addBook(book);
+    }
+    public void addCommentAndRating(User user, Book book, String comment, int rating) {
+        if (user != null) {
+            // Check if the user has borrowed the specified book
+            if (user.hasBorrowedBook(book)) {
+                user.addCommentAndRating(book, comment, rating);
+                System.out.println("Rating and comment added successfully!");
+            } else {
+                System.out.println("You can only add ratings and comments for books you have borrowed.");
+            }
+        } else {
+            System.out.println("User not found.");
+        }
+    }
+    public List<Book> searchBooks(String title, String author, String releaseYear) {
+        List<Book> results = new ArrayList<>();
+    
+        for (Book book : books) {
+            boolean matchTitle = title.isEmpty() || book.getTitle().toLowerCase().contains(title.toLowerCase());
+            boolean matchAuthor = author.isEmpty() || book.getAuthor().toLowerCase().contains(author.toLowerCase());
+            boolean matchReleaseYear = releaseYear.isEmpty() || String.valueOf(book.getReleaseYear()).equals(releaseYear);
+    
+            if (matchTitle && matchAuthor && matchReleaseYear) {
+                results.add(book);
+            }
+        }
+    
+        return results;
     }
     public String getAllBooksInfo(LibraryUser user) {
-        //maybe check if libr is ad or not lol
         StringBuilder result = new StringBuilder();
         result.append("List of Books:\n");
-
-        if(user.hasViewingPrivileges()){
-            // System.out.println(user.hasViewingPrivileges());
+    
         for (Book book : books) {
             result.append("Title: ").append(book.getTitle()).append("\n");
             result.append("Author: ").append(book.getAuthor()).append("\n");
@@ -239,19 +302,14 @@ public void printAllCategories() {
             result.append("Release Year: ").append(book.getReleaseYear()).append("\n");
             result.append("ISBN: ").append(book.getISBN()).append("\n");
             result.append("Number of Copies: ").append(book.getNumCopies()).append("\n");
-            result.append("Rating: ").append(book.getRating()).append("\n");
+            result.append("Average Rating: ").append(book.getAverageRating()).append("\n");
             result.append("Category: ").append(book.getCategory()).append("\n");
-            result.append("Comments: ").append(book.getComments()).append("\n\n");
+            result.append("Comments: ").append(String.join(", ", book.getComments())).append("\n\n");
         }
+    
         return result.toString();
     }
-
-
-    else {
-    System.out.println("not authorised");
-    return("no");
-}
-    }
+    
     public void addRandomUsers(int numberOfUsers) {
         for (int i = 0; i < numberOfUsers; i++) {
             String username = "user" + (i + 1);
@@ -400,9 +458,38 @@ public void printAllCategories() {
            
             
         }
+        // private void addRatingsAndComments(Book book, int numRatingsAndComments) {
+        //     String[] sampleComments = {
+        //         "A captivating read!",
+        //         "Well-written and thought-provoking.",
+        //         "Highly recommended.",
+        //         "Couldn't put it down!",
+        //         "Great characters and plot.",
+        //         "An absolute classic.",
+        //         "Interesting and informative.",
+        //         "Page-turner from start to finish."
+        //         // Add more meaningful comments as needed
+        //     };
     
+        //     Random random = new Random();
+    
+        //     for (int i = 0; i < numRatingsAndComments; i++) {
+        //         int randomRating = random.nextInt(5) + 1;  // Random rating between 1 and 5
+        //         String randomComment = sampleComments[random.nextInt(sampleComments.length)];
+    
+        //         book.addRating(randomRating);
+        //         // book.addComment("good");
+        //     }
+        // }
 
-
+        // public void addCommentAndRating(User user, Book book, String comment, int rating) {
+        //     if (user != null) {
+        //         user.addCommentAndRating(book, comment, rating);
+        //     } else {
+        //         System.out.println("User not found.");
+        //     }
+        // }
+    
         private Borrowing findBorrowingByUserAndBookISBN(User user, String bookISBN) {
             for (Borrowing borrowing : allBorrowings) {
                 if (borrowing.getUser().equals(user) && borrowing.getBook().getISBN().equals(bookISBN)) {

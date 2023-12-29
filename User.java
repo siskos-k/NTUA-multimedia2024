@@ -23,12 +23,28 @@ public class User implements LibraryUser{
         this.borrowings = new ArrayList<>();
 
     }
-
+    public void addCommentAndRating(Book book, String comment, int rating) {
+        if (book != null) {
+            book.addComment(comment);
+            book.addRating(rating);
+            System.out.println("Comment and rating added successfully!");
+        } else {
+            System.out.println("Book not found.");
+        }
+    }
     // Getters and setters
     public String getUsername() {
         return username;
     }
 
+    public boolean hasBorrowedBook(Book book) {
+        for (Borrowing borrowing : borrowings) {
+            if (borrowing.getBook().equals(book)) {
+                return true;
+            }
+        }
+        return false;
+    }
     public void setUsername(String username) {
         this.username = username;
     }
