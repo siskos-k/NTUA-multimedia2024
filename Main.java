@@ -32,6 +32,7 @@ public class Main {
 
         library.addSpecificBorrowings();
         // LibrarySerializer.saveUsers(library.getUsers());
+        // LibrarySerializer.saveBooks(library.getBooks());
 
         Scanner scanner = new Scanner(System.in);
 
@@ -103,6 +104,8 @@ public class Main {
                         isUser = true;
                         System.out.println("User logged in successfully!");
                         User newCurr = new User(newUserUsername, newUserPassword, newName, newSurname, newAdt, newEmail);
+                        LibrarySerializer.saveUsers(library.getUsers());
+                        LibrarySerializer.saveBooks(library.getBooks());
                         performUserActions(newCurr, library, scanner);
                     } else {
                         System.out.println("Error logging in the new user. Exiting...");
@@ -194,6 +197,8 @@ public class Main {
                     // Call the method to add a book
                     library.addBookByAdmin(admin, newTitle, newAuthor, newPublisher, newReleaseYear, newISBN, newNumCopies, newCategory);
                     System.out.println("Book added successfully!");
+                    //  LibrarySerializer.saveUsers(library.getUsers());
+                    LibrarySerializer.saveBooks(library.getBooks());
                     break;
 
                 case 3:
@@ -217,6 +222,8 @@ public class Main {
 
                     // Call the method to edit a book
                     library.editBookByAdmin(admin, bookISBNToEdit, newTitleE, newAuthorE, newPublisherE, newReleaseYearE, newNumCopiesE, newCategoryE);
+                    //  LibrarySerializer.saveUsers(library.getUsers());
+                    LibrarySerializer.saveBooks(library.getBooks());
                     break;
 
                 case 4:
@@ -226,6 +233,8 @@ public class Main {
                     library.removeBookFromBorrowings(bookISBNToDelete);
 
                     library.deleteBookByAdmin(admin, bookISBNToDelete);
+                    //  LibrarySerializer.saveUsers(library.getUsers());
+                    LibrarySerializer.saveBooks(library.getBooks());
                     break;
 
                 case 5:
@@ -242,6 +251,8 @@ public class Main {
 
                     // Call the method to add or update a category
                     library.UpdateCategory(oldCategory.isEmpty() ? null : oldCategory, updatedCategory);
+                    LibrarySerializer.saveUsers(library.getUsers());
+                    LibrarySerializer.saveBooks(library.getBooks());
                     break;
 
                 case 7:
@@ -253,6 +264,8 @@ public class Main {
 
                     // Call the method to remove a category and associated books
                     library.removeCategoryAndBooks(categoryToRemove);
+                    LibrarySerializer.saveUsers(library.getUsers());
+                    LibrarySerializer.saveBooks(library.getBooks());
                     break;
 
                 case 8:
@@ -269,6 +282,8 @@ public class Main {
             
                     // Call the method to terminate borrowing by admin
                     library.terminateBorrowingByAdmin(admin, usernameToTerminate, ISBNToTerminate);
+                    LibrarySerializer.saveUsers(library.getUsers());
+                    LibrarySerializer.saveBooks(library.getBooks());
                     break;
             
 
@@ -291,6 +306,9 @@ public class Main {
                 
                     // Call the method to edit user credentials
                     library.editUserCredentialsByAdmin(admin, targetUsername, newUsername, newPassword, newName, newSurname, newAdt, newEmail);
+                    
+                    LibrarySerializer.saveUsers(library.getUsers());
+                    LibrarySerializer.saveBooks(library.getBooks());
                     break;
             
                 case 11:
@@ -355,6 +373,8 @@ public class Main {
 
             // Add the rating and comment to the book
             library.addCommentAndRating(user, bookToRate, comment, rating);
+            LibrarySerializer.saveUsers(library.getUsers());
+            LibrarySerializer.saveBooks(library.getBooks());
 
             // System.out.println("Rating and comment added successfully!");
         } else {
