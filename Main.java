@@ -138,7 +138,8 @@ public class Main {
             System.out.println("6. Edit a category");
             System.out.println("7. Delete a category");
             System.out.println("8. View all borrowings");
-            System.out.println("9. Exit admin actions");
+            System.out.println("9. Terminate borrowing");
+            System.out.println("10. Exit admin actions");
 
             int adminChoice = scanner.nextInt();
 
@@ -234,12 +235,25 @@ public class Main {
                     library.viewAllBorrowings();
                     break;
 
-                case 9:
+                    case 9:
+                    // Terminate borrowing by admin
+                    System.out.println("Enter the username of the user: ");
+                    String usernameToTerminate = scanner.next();
+                    System.out.println("Enter the ISBN of the book to terminate the borrowing: ");
+                    String ISBNToTerminate = scanner.next();
+            
+                    // Call the method to terminate borrowing by admin
+                    library.terminateBorrowingByAdmin(admin, usernameToTerminate, ISBNToTerminate);
+                    break;
+            
+                case 10:
                     // Exit admin actions
                     System.out.println("Exiting admin actions.");
                     adminActionsLoop = false;
                     break;
-
+            
+                // ... (remaining cases)
+            
                 default:
                     System.out.println("Invalid choice. Please choose a valid option.");
             }

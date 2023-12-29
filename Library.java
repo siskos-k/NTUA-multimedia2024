@@ -315,6 +315,80 @@ public void printAllCategories() {
         // Displaying all borrowings after specific borrowings
         viewAllBorrowings();
     }
+    public void terminateBorrowingByAdmin(Admin admin, String username, String ISBN) {
+        // Check if the admin has viewing privileges
+        if (admin.hasViewingPrivileges()) {
+            // Find the user by username
+            User user = getUserByUsername(username);
+
+            // Find the book by ISBN
+            Book book = findBookByISBN(ISBN);
+
+            if (user != null && book != null) {
+                // Check if the book is currently borrowed by the user
+                if (isBookBorrowed(user, book)) {
+                    // Remove the borrowing entry
+                    Borrowing borrowingToRemove = findBorrowing(user, book);
+                    allBorrowings.remove(borrowingToRemove);
+
+                    // Update the book's available copies
+                    book.setNumCopies(book.getNumCopies() + 1);
+
+                    System.out.println("Borrowing terminated successfully by admin.");
+                } else {
+                    System.out.println("User " + username + " is not currently borrowing the book with ISBN " + ISBN + ".");
+                }
+            } else {
+                System.out.println("User or book not found.");
+            }
+        } else {
+            System.out.println("Admin does not have sufficient privileges to terminate borrowings.");
+        }
+    
+    }
+    
+    // Helper method to check if a book is currently borrowed by a user
+    private boolean isBookBorrowed(User user, Book book) {
+        for (Borrowing borrowing : allBorrowings) {
+            if (borrowing.getUser().equals(user) && borrowing.getBook().equals(book)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Helper method to find a borrowing entry for a specific user and book
+    private Borrowing findBorrowing(User user, Book book) {
+        for (Borrowing borrowing : allBorrowings) {
+            if (borrowing.getUser().equals(user) && borrowing.getBook().equals(book)) {
+                return borrowing;
+            }
+        }
+        return null;
+    }
+    
+        public Book findBookByISBN(String ISBN) {
+            for (Book book : books) {
+                if (book.getISBN().equals(ISBN)) {
+                    return book;
+                }
+            }
+            return null; // Book not found
+        }
+       
+        
+        // Add the findBorrowingByUserAndBookISBN method in the Library class
+        
+        private Borrowing findBorrowingByUserAndBookISBN(User user, String bookISBN) {
+            for (Borrowing borrowing : allBorrowings) {
+                if (borrowing.getUser().equals(user) && borrowing.getBook().getISBN().equals(bookISBN)) {
+                    return borrowing;
+                }
+            }
+            return null;
+        }
+        
+    
     
     }
     // Additional methods for library actions
