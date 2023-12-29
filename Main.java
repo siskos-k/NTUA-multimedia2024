@@ -5,12 +5,32 @@ public class Main {
     public static void main(String[] args) {
         Library library = new Library();
 
+
+        /*
+         * These are only here to reset the users and borrowings for testing purposes
+         */
+
+
+        library.addSampleBooksAndRatings();
+        library.addRandomUsers(5);
+        // System.out.println("These are all the current users");
+        System.out.println("These are all the current users" + library.getUsers());
+        
+        LibrarySerializer.saveUsers(library.getUsers());
+        LibrarySerializer.saveBooks(library.getBooks());
+
+
+          /*
+         * Comment in for reset, comment out to test serialization
+         */
+
+
         //load books from file
         List<Book> loadedBooks = LibrarySerializer.loadBooks();
         if (loadedBooks != null) {
             library.setBooks(loadedBooks);
         }
-        // library.addSampleBooksAndRatings();
+    
 
 
 
@@ -352,7 +372,7 @@ public class Main {
 
                     if (bookToBorrow != null) {
                         library.borrowBook(user, bookToBorrow);
-                        System.out.println("Book borrowed successfully!");
+                        // System.out.println("Book borrowed successfully!");
                     } else {
                         System.out.println("Book with ISBN " + bookISBNToBorrow + " not found.");
                     }
