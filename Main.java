@@ -4,24 +4,34 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Library library = new Library();
+
+        //load books from file
         List<Book> loadedBooks = LibrarySerializer.loadBooks();
         if (loadedBooks != null) {
             library.setBooks(loadedBooks);
         }
         // library.addSampleBooksAndRatings();
-       
-       //loading books
-        
 
+
+
+        //load users from file
+        List<User> loadedUsers = LibrarySerializer.loadUsers();
+        if (loadedUsers != null) {
+            library.setUsers(loadedUsers);
+        } 
         // LibrarySerializer.saveBooks(library.getBooks());
+
         // Adding an admin with provided credentials
         Admin medialabAdmin = new Admin("a", "a");
         library.addAdmin(medialabAdmin);
-        library.addRandomUsers(5);
+        // library.addRandomUsers(5);
+
         // adding a user
         // User medialabUser = new User("u", "u");
         // library.addUser(medialabUser);
+
         library.addSpecificBorrowings();
+        // LibrarySerializer.saveUsers(library.getUsers());
 
         Scanner scanner = new Scanner(System.in);
 
@@ -294,6 +304,7 @@ public class Main {
                 default:
                     System.out.println("Invalid choice. Please choose a valid option.");
             }
+
         }
     }
 

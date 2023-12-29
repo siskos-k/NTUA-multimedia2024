@@ -1,13 +1,20 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class User implements LibraryUser{
+public class User implements LibraryUser, Serializable {
     private String username;
     private String password;
     private String name;
     private String surname;
     private String adt;
     private String email;
+    
     public boolean login(String username, String password) {
         // Implementation for admin login
         return false;
@@ -22,6 +29,18 @@ public class User implements LibraryUser{
         // this.borrowedBooks = new/ ArrayList<>();
         this.borrowings = new ArrayList<>();
 
+    }
+    public void serializeUser(String filename) throws IOException {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
+            out.writeObject(this);
+        }
+    }
+
+    // Deserialization method
+    public static User deserializeUser(String filename) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
+            return (User) in.readObject();
+        }
     }
     public void addCommentAndRating(Book book, String comment, int rating) {
         if (book != null) {

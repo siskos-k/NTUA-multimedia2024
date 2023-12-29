@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.Date;
 
-public class Borrowing {
+public class Borrowing implements Serializable {
     private User user;
     private Book book;
     private Date borrowingDate;
@@ -8,10 +9,9 @@ public class Borrowing {
     public Borrowing(User user, Book book) {
         this.user = user;
         this.book = book;
-        this.borrowingDate = new Date(); // Assuming you want to track the borrowing date
+        this.borrowingDate = new Date(); // Set the borrowing date to the current date
     }
 
-    // Getters and setters
     public User getUser() {
         return user;
     }
@@ -35,7 +35,4 @@ public class Borrowing {
     public void setBorrowingDate(Date borrowingDate) {
         this.borrowingDate = borrowingDate;
     }
-
- 
-    
 }

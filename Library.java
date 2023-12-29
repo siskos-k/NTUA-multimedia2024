@@ -1,3 +1,9 @@
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -6,7 +12,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-public class Library {
+public class Library implements Serializable {
     private List<Book> books;
     private List<User> users;
     private List<Admin> admins;
@@ -24,6 +30,24 @@ public class Library {
         this.uniqueCategories = new HashSet<>();
         this.allBorrowings = new ArrayList<>();
 
+    }
+     public void serializeUsers() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("users.ser"))) {
+            oos.writeObject(users);
+            System.out.println("Users serialized successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Deserialize users from a file
+    public void deserializeUsers() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("users.ser"))) {
+            users = (List<User>) ois.readObject();
+            System.out.println("Users deserialized successfully.");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
     public void addRatingAndComment(User user, Book book, int rating, String comment) {
         if (user != null && book != null) {
